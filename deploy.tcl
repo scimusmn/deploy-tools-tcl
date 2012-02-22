@@ -165,6 +165,12 @@ if {[string compare $VCS $GIT_STRING] == 0} {
       exit $E_WC_NOT_GIT;
     $prompt;
     }
+    -re "error:.*" {
+      send "exit\r";
+      send_error "\n ERROR: Unknown git error \n";
+      exit $E_GIT_ERROR;
+    $prompt;
+    }
   }
 }
 
