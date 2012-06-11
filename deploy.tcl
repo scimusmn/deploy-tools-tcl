@@ -26,7 +26,7 @@ proc usage {} {
 
   EXAMPLE:
     ci_deploy example.com git /srv/www/example.com/public_html janesmith
-      
+
       or
 
     ci_deploy example.com git /srv/www/example.com/public_html janesmith EC2wBOEk26.8
@@ -163,13 +163,11 @@ if {[string compare $VCS $GIT_STRING] == 0} {
       send "exit\r";
       send_error "\n ERROR: The origin git repo is down. Remote end hung up. \n";
       exit $E_WC_NOT_GIT;
-    $prompt;
     }
     -re "error:.*" {
       send "exit\r";
       send_error "\n ERROR: Unknown git error \n";
       exit $E_GIT_ERROR;
-    $prompt;
     }
   }
 }
