@@ -90,13 +90,7 @@ if {[file executable /usr/bin/ssh]} {
 }
 
 # SSH to remote server
-if {[string compare $VCS $SVN_STRING] == 0} {
-  # If using SVN we can update the repo at the same time
-  spawn $SSHBIN $USER@$HOST svn update $WC
-} elseif {[string compare $VCS $GIT_STRING] == 0} {
-  # If Git, just open SSH connection
-  spawn $SSHBIN $USER@$HOST 
-}
+spawn $SSHBIN $USER@$HOST
 expect {
     # Supply a password if it's provided
     -nocase "Are you sure you want to continue connecting (yes/no)? " { send "yes\r"; exp_continue; }
