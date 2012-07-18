@@ -170,6 +170,10 @@ if {[string compare $VCS $GIT_STRING] == 0} {
       exit $E_GIT_ERROR;
     }
   }
+  # Checkout all files, in case any local changes have been made.
+  # No errors are expected, since Git will just write over local
+  # changes with no output.
+  send "git checout ."
 }
 
 send "exit\r";
