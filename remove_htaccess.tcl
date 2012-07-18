@@ -72,12 +72,13 @@ if {$USER eq ""} {
 set prompt "(%|#|\\\$) $"
 
 # Define error codes
-set E_NO_SSH      2 ;# can't find a usable SSH on our system
-set E_NO_CONNECT  3 ;# failure to connect to remote server (timed out)
-set E_WRONG_PASS  4 ;# password provided does not work
-set E_WC_NO_EXIST 5 ;# working copy directory doesn't exist
-set E_WC_FILE     6 ;# .htaccess file error
-set E_UNKNOWN     25 ;# unexpected failure
+set E_NO_SSH            2 ;# can't find a usable SSH on our system
+set E_NO_CONNECT        3 ;# failure to connect to remote server (timed out)
+set E_WRONG_PASS        4 ;# password provided does not work
+set E_WC_NO_EXIST       5 ;# working copy directory doesn't exist
+set E_WC_NO_PERMISSION  6 ;# .htaccess file error
+set E_WC_NO_HTACCESS    7 ;# .htaccess does not exist
+set E_UNKNOWN           25 ;# unexpected failure
 
 # Find the SSH binary on our system
 if {[file executable /usr/bin/ssh]} {
@@ -120,12 +121,12 @@ expect {
   -nocase "rm: cannot remove `.htaccess': Permission denied" {
     send "exit\r";
     send_error "\n ERROR: This user does not have permission to delete that file. \n";
-    exit $E_WC_NOT_GIT;
+    exit $E_WC_NO_PERMISSION;
   }
   -nocase "rm: cannot remove `.*': No such file or directory" {
     send "exit\r";
     send_error "\n ERROR: That directory does not have a .htaccess file to delete. \n";
-    exit $E_WC_NOT_GIT;
+    exit $E_WC_NO_HTACCESS;
   $prompt;
   }
   -re "error:.*" {
