@@ -169,6 +169,7 @@ if {[string compare $VCS $GIT_STRING] == 0} {
       send_error "\n ERROR: Unknown git error \n";
       exit $E_GIT_ERROR;
     }
+    $prompt;
   }
   # Checkout all files, in case any local changes have been made.
   # No errors are expected, since Git will just write over local
